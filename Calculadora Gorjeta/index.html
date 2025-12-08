@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>                                                                                                            <!-- Define o padrão de caracteres -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />                                        <!-- Responsividade para celulares -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />  <!-- Importa a fonte Roboto -->
+    <link rel="stylesheet" href="style.css" />                                                                      <!-- Link para o arquivo CSS externo -->
+    <title>Calculadora de Gorjeta</title>
+    <style>
+      .back-btn {
+      display: inline-block;                                                         /* Faz o link se comportar como um botão */
+      margin: 20px;                                                                  /* Espaçamento ao redor do botão */
+      padding: 10px 20px;                                                            /* Espaçamento interno (aumenta o tamanho do botão) */
+      background: #000;                                                            /* Cor de fundo preta */
+      color: #fff;                                                                 /* Texto branco */
+      text-decoration: none;                                                         /* Remove o sublinhado típico de links */
+      border-radius: 6px;                                                            /* Bordas arredondadas */
+      }
+      .back-btn:hover { background: #222; }                                        /* opcional: efeito hover */
+    </style>
+  </head>
+  <body>
+    <a href="../index.html" class="back-btn">← Voltar</a>                            <!-- Aciona botão voltar -->                                                                             <!-- Container principal que segura tudo -->
+    <main oninput="update()">                                                        <!-- Barra superior com o título e o botão de tema -->
+      <div class="top-bar">
+        
+        <h1>Calculadora de Gorjeta</h1>
+        <button id="themeToggle" class="theme-toggle">🌙</button>                   <!-- Botão que alterna entre claro/escuro -->
+      </div>
+      <section>                                                                     <!-- PRIMEIRA CAIXA: Conta + Gorjeta + Total -->
+        <div class="bill">                                                          <!-- Campo do valor da conta -->
+          <label for="yourBill">Conta (R$)</label>
+          <input type="number" placeholder="Valor da conta" id="yourBill" />
+        </div>
+        <div class="tip-buttons">                                                   <!-- Seleção rápida de gorjetas -->
+          <button class="tip-btn" data-value="5">5%</button>
+          <button class="tip-btn" data-value="10">10%</button>
+          <button class="tip-btn" data-value="15">15%</button>
+          <button class="tip-btn" data-value="20">20%</button>
+        </div>
+        <div>                                                                       <!-- Slider de gorjeta + texto -->
+          <div class="space-between">
+            <label>Selecione a gorjeta</label>
+            <span id="tipPercent"></span>
+          </div>
+          <input type="range" value="0" id="tipInput" class="range" />
+        </div>
+        <div class="space-between">                                                 <!-- Valor da gorjeta -->
+          <span>Gorjeta</span>
+          <span id="tipValue"></span>
+        </div>
+        <hr />
+        <div class="space-between total">                                           <!-- Total com gorjeta -->
+          <span>Total</span>
+          <span id="totalWithTip"></span>
+        </div>
+      </section>
+      <section>                                                                     <!-- SEGUNDA CAIXA: Dividir conta -->
+        <div>
+          <div class="space-between">
+            <label for="splitInput">Dividir por</label>
+            <span id="splitValue"></span>
+          </div>                                                                    <!-- Slider para separar em até 10 pessoas -->
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value="1"
+            id="splitInput"
+            class="range"
+          />
+        </div>
+        <div class="space-between">                                                 <!-- Valor para cada pessoa -->
+          <span>Valor por pessoa</span>
+          <span id="billEach"></span>
+        </div>
+      </section>
+    </main>
+    <script src="index.js"></script>                                                <!-- JavaScript -->
+  </body>
+</html>

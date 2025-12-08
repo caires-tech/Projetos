@@ -1,0 +1,324 @@
+:root { /* Variáveis de tema para fácil ajuste */
+    --bg-0: #071021;            /* Fundo principal muito escuro */
+    --bg-1: #0b1624;            /* Fundo secundário do painel */
+    --panel: rgba(255,255,255,0.03); /* Painel translúcido */
+    --glass: rgba(255,255,255,0.04); /* Vidro sutil */
+    --accent: #6ef0c3;          /* Verde água futurista (accent) */
+    --accent-2: #6ad1ff;        /* Azul claro secundário para gradientes */
+    --muted: #94a3b8;           /* Texto secundário */
+    --text: #e6f0ff;           /* Texto principal em tom claro */
+    --glass-border: rgba(110,240,195,0.12); /* Borda do vidro */
+    --shadow: 0 10px 30px rgba(2,6,23,0.6); /* Sombra sutil para profundidade */
+    --radius-xl: 16px;         /* Raio de borda padrão grande */
+    --transition: 200ms cubic-bezier(.2,.9,.2,1); /* Transição suave padrão */
+}
+
+* { box-sizing: border-box; } /* Caixa modelo mais previsível */
+
+html { 
+    font-size: 14px;            /* Tamanho base da fonte (rem ajustado) */
+    -webkit-font-smoothing: antialiased; /* Suaviza fontes em WebKit */
+    -moz-osx-font-smoothing: grayscale;  /* Suaviza fontes no Firefox Mac */
+}
+
+body { 
+    min-height: 100vh;          /* Garante altura total */
+    margin: 0;                  /* Remove margem padrão */
+    display: flex;              /* Usa flex para centralizar conteúdo */
+    align-items: center;        /* Centraliza verticalmente */
+    justify-content: center;    /* Centraliza horizontalmente */
+    padding: 2rem;              /* Espaçamento ao redor em telas pequenas */
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(106,209,255,0.06), transparent 10%),
+                radial-gradient(1000px 500px at 90% 90%, rgba(110,240,195,0.04), transparent 10%),
+                linear-gradient(180deg, var(--bg-0), var(--bg-1)); /* Fundo com leves luzes e gradiente escuro */
+    color: var(--text);         /* Cor padrão do texto */
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; /* Fonte limpa e moderna */
+}
+
+
+.back-btn {
+    position: absolute;
+    left: 50px; /* distância da borda esquerda */
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    padding: 10px 20px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    z-index: 1000; /* garante que fica por cima */
+}
+
+/* Card / painel principal */
+main.card { 
+    width: min(720px, 94vw);    /* Largura responsiva */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); /* Fundo suave */
+    border-radius: var(--radius-xl); /* Cantos arredondados grandes */
+    padding: 2.2rem;            /* Espaçamento interno */
+    box-shadow: var(--shadow);  /* Sombra para levantar o card */
+    border: 1px solid transparent; /* Fallback de borda */
+    position: relative;         /* Para elementos decorativos posicionados */
+    overflow: visible;          /* Permite efeitos saírem do card */
+    backdrop-filter: blur(6px) saturate(1.05); /* Leve vidro */
+    transition: transform var(--transition), box-shadow var(--transition); /* Animação sutil */
+    animation: fadeIn 420ms ease both; /* Animação de entrada */
+}
+
+/* Hover leve no card para profundidade em desktops */
+@media (hover: hover) and (pointer: fine) {
+  main.card:hover { 
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(2,6,23,0.72);
+  }
+}
+
+/* título */
+#welcomeScreen h2, .welcome h2 { 
+    font-size: 2.4rem;         /* Tamanho do título reduzido para estilo clean */
+    line-height: 1.05;         /* Altura de linha compacta */
+    margin: 0 0 0.5rem 0;      /* Espaçamento inferior */
+    color: var(--text);        /* Cor clara */
+    letter-spacing: 0.6px;     /* Espaçamento de letras sutil */
+}
+
+/* subtítulo máximo de tentativas */
+#welcomeScreen p#maxAttemptsText { 
+    margin: 0 0 1.2rem 0;      /* Espaçamento abaixo do título */
+    color: var(--muted);       /* Texto menos destacado */
+    font-size: 0.95rem;        /* Tamanho discreto */
+    opacity: 0.9;              /* Leve transparência */
+}
+
+/* game area layout */
+#gameArea.game { 
+    display: grid;             /* Grid para organizar elementos */
+    grid-template-columns: 1fr; /* Uma coluna para versão simples */
+    gap: 1.2rem;               /* Espaço entre linhas */
+    align-items: center;       /* Alinha verticalmente */
+}
+
+/* área do input */
+.input-area { 
+    display: flex;             /* Flex para colocar título e input verticalmente */
+    flex-direction: column;    /* Coluna */
+    align-items: center;       /* Centraliza */
+    gap: 0.6rem;               /* Espaçamento entre elementos */
+}
+
+/* mensagens principais */
+h3#textOutput {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--accent-2); /* azul padrão */
+    transition: color var(--transition), transform var(--transition); /* Animação de feedback */
+}
+h3#textOutput.msg-win {
+    color: #22cc55 !important; /* verde */
+}
+
+h3#textOutput.msg-lose {
+    color: #ffb3b3 !important; /* vermelho claro */
+}
+
+
+/* input estilizado */
+input#inputBox { 
+    width: 100%;               /* Ocupa largura disponível do container */
+    max-width: 360px;          /* Largura máxima confortável */
+    padding: 0.9rem 1rem;      /* Espaçamento interno */
+    font-size: 1.4rem;         /* Fonte grande para facilitar leitura */
+    text-align: center;        /* Digitação centralizada */
+    border-radius: 12px;       /* Cantos arredondados */
+    border: 1px solid rgba(255,255,255,0.06); /* Borda suave */
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); /* Fundo sutil */
+    color: var(--text);        /* Cor do texto */
+    outline: none;             /* Remove outline padrão */
+    box-shadow: inset 0 1px 6px rgba(0,0,0,0.5); /* Profundidade interna */
+    transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition); /* Transições suaves */
+}
+
+/* foco do input */
+input#inputBox:focus { 
+    border-color: rgba(110,240,195,0.35); /* Realce verde água ao focar */
+    box-shadow: 0 6px 30px rgba(110,240,195,0.06); /* Sombra difusa para destaque */
+    transform: translateY(-2px); /* Levanta levemente */
+}
+
+/* stats area */
+.stats { 
+    display: grid;             /* Grid para stats */
+    grid-template-columns: 1fr; /* Coluna única */
+    gap: 0.6rem;               /* Espaçamento entre linhas */
+    width: 100%;               /* Ocupa largura */
+    max-width: 420px;          /* Largura máxima */
+    margin: 0 auto;            /* Centraliza horizontalmente */
+}
+
+/* Caixa dos palpites — fixar no topo esquerdo */
+#guessesBox {
+    display: flex;
+    flex-direction: column; /* garante título em cima e palpites abaixo */
+    justify-content: flex-start;
+    align-items: stretch;   /* estica o container interno */
+    text-align: left;       /* título continua à esquerda */
+}
+
+
+
+
+.guess-item {
+    font-size: 1.1rem;    /* Ajusta o tamanho da fonte do item de palpite (número + seta) */
+}
+
+.guess-item .arrow {
+    margin-left: 4px;     /* Espaço entre o número e a seta para não ficarem colados */
+    font-size: inherit;      /* faz a seta herdar o mesmo tamanho de fonte do .guess-item */
+    vertical-align: middle;  /* alinha verticalmente a seta com o número */
+}
+
+/* Cada palpite exibido em linha separada */
+#guesses {
+    display: flex;
+    flex-direction: column;  /* garante vertical */
+    margin-top: 10px;
+    gap: 4px;
+    align-items: flex-end;   /* alinha todos os palpites à direita */
+    text-align: right;       /* garante que o texto também fique à direita */
+}
+
+/* estilo do item */
+/* Cada palpite vira uma linha compacta */
+.guess-item {
+    display: block;       /* quebra automaticamente para a linha de baixo */
+    font-size: 1.05rem;   /* tamanho confortável */
+    margin: 0px 0;        /* reduz espaço entre linhas */
+    line-height: 0;     /* deixa as linhas bem próximas */
+}
+
+/* seta vermelha */
+.guess-item .arrow {
+    margin-left: 2px;
+    font-size: 1.15rem;
+}
+
+
+/* linha de info */
+.info { 
+    display: flex;             /* Flex para alinhar label e valor */
+    justify-content: space-between; /* Espaça aos extremos */
+    align-items: center;       /* Alinha verticalmente */
+    padding: 0.45rem 0.6rem;   /* Pequeno padding para melhor toque */
+    border-radius: 10px;       /* Cantos arredondados */
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); /* Leve camada */
+    border: 1px solid rgba(255,255,255,0.02); /* Borda discreta */
+}
+
+/* label de stat */
+.info p { 
+    margin: 0;                 /* Remove margem */
+    color: var(--muted);       /* Texto menos chamativo */
+    font-size: 0.95rem;        /* Tamanho de fonte */
+}
+
+/* valor de stat */
+.info span { 
+    font-size: 1.05rem;        /* Valor ligeiramente maior */
+    color: var(--text);        /* Cor principal */
+    font-weight: 600;          /* Destaque leve */
+}
+
+/* botão principal */
+.button-wrapper { 
+    display: flex;             /* Flex para botões */
+    gap: 0.6rem;               /* Espaçamento entre botões (se houver) */
+    justify-content: center;   /* Centraliza botões */
+    margin-top: 0.6rem;        /* Espaço acima dos botões */
+}
+
+/* estilo do botão NEW GAME */
+#newGameButton { 
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #022;
+    border: none;
+    padding: 0.9rem 1.6rem;
+    font-size: 0.95rem;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(110,240,195,0.08);
+    backdrop-filter: blur(6px);
+
+    /* Transições e ajuste para não "andar" no hover */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    transform-origin: center center;
+}
+
+
+/* hover do botão */
+#newGameButton:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+/* foco acessível do botão */
+#newGameButton:focus { 
+    outline: 3px solid rgba(110,240,195,0.12); /* Contorno para foco por teclado */
+    outline-offset: 4px;     /* Espaçamento do outline */
+}
+
+/* mensagem de vitória/derrota (classes utilitárias que o JS pode usar futuramente) */
+.msg-win {
+    color: #22cc55 !important; /* verde brilhante */
+    font-weight: 700; 
+}
+.msg-lose {
+    color: #ffb3b3 !important; /* verde brilhante */
+    font-weight: 700; 
+}
+
+/* pequenas decorações para um visual futurista */
+.decor-bottom { 
+    position: absolute;       /* Posição relativa ao card */
+    left: 50%;                /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajuste do centro */
+    bottom: -18px;            /* Fica um pouco abaixo do card */
+    width: 120px;             /* Largura da decoração */
+    height: 6px;              /* Altura fina */
+    border-radius: 999px;     /* Totalmente arredondado */
+    background: linear-gradient(90deg, rgba(110,240,195,0.28), rgba(106,209,255,0.24)); /* Glow suave */
+    filter: blur(8px);        /* Desfocado para efeito de luz */
+    opacity: 0.9;             /* Opacidade */
+    pointer-events: none;     /* Não interfere no clique */
+}
+
+/* animação de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* responsividade */
+@media (min-width: 860px) {
+    #gameArea.game { grid-template-columns: 1fr 1fr; gap: 1.6rem; } /* Em telas largas, duas colunas (input vs stats) */
+    .input-area { align-items: flex-end; } /* Alinha o input quando em linha */
+    h3#textOutput { font-size: 1.1rem; } /* Ajuste de fonte */
+}
+
+@media (max-width: 420px) {
+    input#inputBox { font-size: 1.15rem; padding: 0.8rem 0.8rem; max-width: 100%; } /* Ajustes para mobile */
+    main.card { padding: 1.2rem; }
+}
+
+/* Remove as setinhas do input type="number" no Chrome, Edge, Opera */
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove no Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
