@@ -21,49 +21,77 @@ html {
     -moz-osx-font-smoothing: grayscale;  /* Suaviza fontes no Firefox Mac */
 }
 
-body { 
-    min-height: 100vh;          /* Garante altura total */
-    margin: 0;                  /* Remove margem padrão */
-    display: flex;              /* Usa flex para centralizar conteúdo */
-    align-items: center;        /* Centraliza verticalmente */
-    justify-content: center;    /* Centraliza horizontalmente */
-    padding: 2rem;              /* Espaçamento ao redor em telas pequenas */
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(106,209,255,0.06), transparent 10%),
-                radial-gradient(1000px 500px at 90% 90%, rgba(110,240,195,0.04), transparent 10%),
-                linear-gradient(180deg, var(--bg-0), var(--bg-1)); /* Fundo com leves luzes e gradiente escuro */
-    color: var(--text);         /* Cor padrão do texto */
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; /* Fonte limpa e moderna */
+body {
+    background: #0e0e0f;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    color: #fff;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    min-height: calc(100vh - 56px);
 }
 
 
+/* ===============================
+   BARRA SUPERIOR (BOTÃO VOLTAR)
+   =============================== */
+.top-nav {
+    width: 100%;                 /* Ocupa toda a largura */
+    padding: 10px;               /* Espaçamento interno */
+}
+
+/* ===============================
+   BOTÃO VOLTAR – PADRÃO
+   =============================== */
 .back-btn {
-    position: absolute;
-    left: 50px; /* distância da borda esquerda */
-    top: 50%;
-    transform: translateY(-50%);
-    display: inline-block;
-    padding: 10px 20px;
-    background: #000;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
-    z-index: 1000; /* garante que fica por cima */
+    display: inline-block;       /* Comportamento de botão */
+    padding: 10px 16px;          /* Tamanho confortável para toque */
+    background: #000;            /* Fundo preto */
+    color: #fff;                 /* Texto branco */
+    text-decoration: none;       /* Remove sublinhado */
+    border-radius: 6px;          /* Bordas arredondadas */
+    font-size: 14px;
+}
+
+
+
+/* ===============================
+   MOBILE (botão no topo)
+   =============================== */
+@media (max-width: 768px) {
+
+    .top-nav {
+        position: static;
+        padding: 12px 16px;
+    }
+
+    .page {
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 380px;
+        margin: 0 auto;
+        padding: 1.4rem;
+    }
 }
 
 /* Card / painel principal */
-main.card { 
-    width: min(720px, 94vw);    /* Largura responsiva */
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); /* Fundo suave */
-    border-radius: var(--radius-xl); /* Cantos arredondados grandes */
-    padding: 2.2rem;            /* Espaçamento interno */
-    box-shadow: var(--shadow);  /* Sombra para levantar o card */
-    border: 1px solid transparent; /* Fallback de borda */
-    position: relative;         /* Para elementos decorativos posicionados */
-    overflow: visible;          /* Permite efeitos saírem do card */
-    backdrop-filter: blur(6px) saturate(1.05); /* Leve vidro */
-    transition: transform var(--transition), box-shadow var(--transition); /* Animação sutil */
-    animation: fadeIn 420ms ease both; /* Animação de entrada */
+.card {
+    width: min(720px, 94vw);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: var(--radius-xl);
+    padding: 2.2rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    animation: fadeIn 420ms ease both;
 }
 
 /* Hover leve no card para profundidade em desktops */
@@ -73,6 +101,22 @@ main.card {
     box-shadow: 0 20px 50px rgba(2,6,23,0.72);
   }
 }
+
+.game-header {
+    margin-bottom: 1.6rem;
+    text-align: left;
+}
+
+.game-header h2 {
+    font-size: 2.4rem;
+    margin: 0 0 1.6rem 0;
+}
+
+.game-header p {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
 
 /* título */
 #welcomeScreen h2, .welcome h2 { 
@@ -92,24 +136,31 @@ main.card {
 }
 
 /* game area layout */
-#gameArea.game { 
-    display: grid;             /* Grid para organizar elementos */
-    grid-template-columns: 1fr; /* Uma coluna para versão simples */
-    gap: 1.2rem;               /* Espaço entre linhas */
-    align-items: center;       /* Alinha verticalmente */
+/* ===== GAME AREA – PADRÃO (DESKTOP) ===== */
+#gameArea.game {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+    align-items: start;
 }
 
-/* área do input */
-.input-area { 
-    display: flex;             /* Flex para colocar título e input verticalmente */
-    flex-direction: column;    /* Coluna */
-    align-items: center;       /* Centraliza */
-    gap: 0.6rem;               /* Espaçamento entre elementos */
+/* ===== MOBILE ===== */
+@media (max-width: 1023px) {
+    #gameArea.game {
+        grid-template-columns: 1fr;
+    }
+
+    .input-area {
+        align-items: center;
+        gap: 0.8rem;
+    }
 }
+
+
 
 /* mensagens principais */
 h3#textOutput {
-    margin: 0;
+    margin: 1;
     font-size: 1.05rem;
     color: var(--accent-2); /* azul padrão */
     transition: color var(--transition), transform var(--transition); /* Animação de feedback */
@@ -150,7 +201,7 @@ input#inputBox:focus {
 .stats { 
     display: grid;             /* Grid para stats */
     grid-template-columns: 1fr; /* Coluna única */
-    gap: 0.6rem;               /* Espaçamento entre linhas */
+    gap: 0.8rem;               /* Espaçamento entre linhas */
     width: 100%;               /* Ocupa largura */
     max-width: 420px;          /* Largura máxima */
     margin: 0 auto;            /* Centraliza horizontalmente */
@@ -183,7 +234,8 @@ input#inputBox:focus {
     display: flex;
     flex-direction: column;  /* garante vertical */
     margin-top: 10px;
-    gap: 4px;
+    padding-top: 4rem;
+    gap: 2px;
     align-items: flex-end;   /* alinha todos os palpites à direita */
     text-align: right;       /* garante que o texto também fique à direita */
 }
@@ -193,7 +245,7 @@ input#inputBox:focus {
 .guess-item {
     display: block;       /* quebra automaticamente para a linha de baixo */
     font-size: 1.05rem;   /* tamanho confortável */
-    margin: 0px 0;        /* reduz espaço entre linhas */
+    margin: 0px;        /* reduz espaço entre linhas */
     line-height: 0;     /* deixa as linhas bem próximas */
 }
 
@@ -230,11 +282,10 @@ input#inputBox:focus {
 }
 
 /* botão principal */
-.button-wrapper { 
-    display: flex;             /* Flex para botões */
-    gap: 0.6rem;               /* Espaçamento entre botões (se houver) */
-    justify-content: center;   /* Centraliza botões */
-    margin-top: 0.6rem;        /* Espaço acima dos botões */
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.6rem;
 }
 
 /* estilo do botão NEW GAME */
@@ -298,12 +349,7 @@ input#inputBox:focus {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* responsividade */
-@media (min-width: 860px) {
-    #gameArea.game { grid-template-columns: 1fr 1fr; gap: 1.6rem; } /* Em telas largas, duas colunas (input vs stats) */
-    .input-area { align-items: flex-end; } /* Alinha o input quando em linha */
-    h3#textOutput { font-size: 1.1rem; } /* Ajuste de fonte */
-}
+
 
 @media (max-width: 420px) {
     input#inputBox { font-size: 1.15rem; padding: 0.8rem 0.8rem; max-width: 100%; } /* Ajustes para mobile */

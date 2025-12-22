@@ -7,7 +7,7 @@ function newGame() {                                                            
 }
 function init() {                                                                               // Função chamada automaticamente quando a página carrega (body onload)
    computerNumber = Math.floor(Math.random() * 100 + 1)                                         // Gera um número aleatório entre 1 e 100 e salva em computerNumber
-   console.log(computerNumber)                                                                  // Mostra o número secreto no console (útil para testar)
+   //console.log(computerNumber)                                                                  // Mostra o número secreto no console (útil para testar)
    document.getElementById('maxAttemptsText').innerHTML = 'Máximo de tentativas: ' + maxguesses // Escreve na tela o número máximo de tentativas usando a variável
 }
 function compareNumbers() {                                                                     // Pega o número digitado pelo usuário no input e transforma em Number

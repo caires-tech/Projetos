@@ -8,26 +8,66 @@ html {
 /* Mantive seu visual escuro como padrão.
    O toggle aplica a classe `light` no <body> para ativar o tema claro. */
 body {
-  background: #1a1a1a;               /* Fundo escuro */
-  color: #e6e6e6;                    /* Texto claro */
-  transition: background .3s ease, color .3s ease; /* Suavidade na troca de tema */
-  display: block;
+    background: #0e0e0f;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    color: #fff;
 }
 
-.back-btn {
-    position: absolute;
-    left: 50px; /* distância da borda esquerda */
-    top: 50%;
-    transform: translateY(-50%);
-    display: inline-block;
-    padding: 10px 20px;
-    background: #000;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 16px;
-    z-index: 1000; /* garante que fica por cima */
+/* ===============================
+   ÁREA QUE CENTRALIZA A APLICAÇÃO
+   =============================== */
+.page {
+    min-height: calc(100vh - 60px); /* sobra espaço para o topo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+/* ===============================
+   BARRA SUPERIOR (BOTÃO VOLTAR)
+   =============================== */
+.top-nav {
+    width: 100%;                 /* Ocupa toda a largura */
+    padding: 10px;               /* Espaçamento interno */
+}
+
+/* ===============================
+   BOTÃO VOLTAR – PADRÃO
+   =============================== */
+.back-btn {
+    display: inline-block;       /* Comportamento de botão */
+    padding: 10px 16px;          /* Tamanho confortável para toque */
+    background: #000;            /* Fundo preto */
+    color: #fff;                 /* Texto branco */
+    text-decoration: none;       /* Remove sublinhado */
+    border-radius: 6px;          /* Bordas arredondadas */
+    font-size: 14px;
+}
+
+
+
+/* ===============================
+   MOBILE (botão no topo)
+   =============================== */
+@media (max-width: 768px) {
+    .top-nav {
+        position: relative;
+        padding: 12px;
+    }
+
+    .page {
+        align-items: flex-start;
+        padding-top: 10px;
+    }
+
+    .wrapper {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+    }
+}
+
 
 /* === TEMA CLARO (quando body tiver a classe .light) === */
 body.light {

@@ -4,21 +4,12 @@
 	<meta charset="UTF-8"> 															<!-- Define codificação de caracteres UTF-8 -->
 	<title>Calculadora simples usando Javascript</title> 							<!-- Título exibido na aba do navegador -->
 	<link href="style.css" rel="stylesheet"> 										<!-- Importa o arquivo CSS externo -->
-	<style>
-      .back-btn {
-      display: inline-block;                                                         /* Faz o link se comportar como um botão */
-      margin: 20px;                                                                  /* Espaçamento ao redor do botão */
-      padding: 10px 20px;                                                            /* Espaçamento interno (aumenta o tamanho do botão) */
-      background: #000;                                                            /* Cor de fundo preta */
-      color: #fff;                                                                 /* Texto branco */
-      text-decoration: none;                                                         /* Remove o sublinhado típico de links */
-      border-radius: 6px;                                                            /* Bordas arredondadas */
-      }
-      .back-btn:hover { background: #222; }                                        /* opcional: efeito hover */
-    </style>
 </head>
-<body> 																				<!-- Corpo da página, tudo visível ao usuário fica aqui -->
-	<a href="../index.html" class="back-btn">← Voltar</a>							<!-- Aciona botão voltar -->
+<body> 	
+	<div class="top-nav">
+        <a href="../index.html" class="back-btn">← Voltar</a>						<!-- Aciona botão voltar -->
+    </div>	
+	<main class="page">																<!-- Corpo da página, tudo visível ao usuário fica aqui -->
 	<div class="wrapper"> 															<!-- Div usada como contêiner principal para estilos -->
 		<h2>Calculadora Simples</h2> 												<!-- Título da calculadora -->
 		<input id="num-one" name="num-one" type="text"> 							<!-- Campo de texto para o primeiro número -->
@@ -37,7 +28,8 @@
 		<br> 
         <button onclick="outcome()" type="button">calcular</button> 				<!-- Botão que executa a função outcome() no JavaScript ao ser clicado -->
 		<h1 id="resultArea"></h1>													<!-- Área onde o resultado será exibido pelo JavaScript -->
-	</div> 																			<!-- Fim do contêiner wrapper -->
+	</div> 	
+	</main>																		<!-- Fim do contêiner wrapper -->
 	<script src="index.js"></script> 												<!-- Importa o arquivo JavaScript com a lógica da calculadora -->
 </body>
 </html> 

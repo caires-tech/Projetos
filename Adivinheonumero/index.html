@@ -8,11 +8,16 @@
     <title>Adivinhe o Número</title>                                                 <!-- Define o título da página que aparece na aba do navegador -->
   </head>                                                                           <!-- Fim da seção head -->
   <body onload="init()">                                                            <!-- Início do corpo da página; chama a função init() quando a página terminar de carregar -->
-    <a href="../index.html" class="back-btn">← Voltar</a>                            <!-- Aciona botão voltar -->                                                                             <!-- Container principal que segura tudo --><main class="card">                                                             <!-- Elemento semântico que representa o conteúdo principal da página; classe para estilização -->
-      <div id="welcomeScreen" class="welcome">                                      <!-- Bloco de boas-vindas com id para referência em CSS/JS -->
-        <h2>Adivinhe o número <br />1 - 100</h2>                                     <!-- Título principal com quebra de linha indicando o intervalo do jogo -->
+    <div class="top-nav">
+        <a href="../index.html" class="back-btn">← Voltar</a>						            <!-- Aciona botão voltar -->
+    </div>	 
+                                                                                      <!-- Container principal que segura tudo -->
+      <main class="page">                                                             <!-- Elemento semântico que representa o conteúdo principal da página; classe para estilização -->
+      <section class="card">
+        <header class="game-header">                                                <!-- Bloco de boas-vindas com id para referência em CSS/JS -->
+        <h2>Adivinhe o número <br />1 - 100</h2>                                    <!-- Título principal com quebra de linha indicando o intervalo do jogo -->
         <p id="maxAttemptsText"></p>                                                <!-- bloco para informar a quantidade máxima de tantativas do jogo com id de referência -->
-      </div>                                                                        <!-- Fim do welcomeScreen -->
+        </header>                                                                        <!-- Fim do welcomeScreen -->
       <div id="gameArea" class="game">                                              <!-- Área principal do jogo (onde ficam input, estatísticas e botões) -->
         <section class="input-area">                                                <!-- Seção para o campo de palpite -->
           <h3 id="textOutput">Seu palpite:</h3>                                      <!-- Subtítulo onde serão exibidas mensagens ao jogador -->
@@ -28,11 +33,13 @@
             <span id="guesses"></span>                                              <!-- Elemento onde os palpites do usuário serão listados dinamicamente -->
           </div>                                                                    <!-- Fim do bloco de palpites -->
         </section>                                                                  <!-- Fim da seção de estatísticas -->
-        <div class="button-wrapper">                                                <!-- Wrapper para organizar visualmente os botões (mantive estrutura original de botão abaixo) -->
-          <button id="newGameButton" onclick="newGame()">NOVO JOGO</button>          <!-- Botão que, ao ser clicado, chama a função newGame() -->
-        </div>                                                                      <!-- Fim do button-wrapper -->
+                                                                            <!-- Fim do button-wrapper -->
       </div>                                                                        <!-- Fim da área do jogo -->
+      <div class="button-wrapper">                                                <!-- Wrapper para organizar visualmente os botões (mantive estrutura original de botão abaixo) -->
+          <button id="newGameButton" onclick="newGame()">NOVO JOGO</button>          <!-- Botão que, ao ser clicado, chama a função newGame() -->
+        </div>  
       <div class="decor-bottom" aria-hidden="true"></div>                           <!-- Elemento decorativo para efeito futurista no rodapé do card -->
+    </section>
     </main>                                                                         <!-- Fim do conteúdo principal -->
     <script src="index.js"></script>                                                <!-- Inclui o arquivo JavaScript index.js que contém a lógica do jogo -->
   </body>                                                                           <!-- Fim do corpo -->
