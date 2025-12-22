@@ -56,6 +56,7 @@ DOM e lógica de programação.
     │── index.html
     │── style.css
     │── README.md
+    |── pagina inicial.JPG
 
 ------------------------------------------------------------------------
 
