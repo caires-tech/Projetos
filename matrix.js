@@ -82,7 +82,7 @@ for (let x = 0; x < cols; x++) {
   beams[x] = [];
 
   // 1 ou 2 feixes por coluna
-  const beamCount = Math.floor(Math.random() * 2) + 1;
+  const beamCount = Math.floor(Math.random() * 3) + 2;
 
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
@@ -90,7 +90,7 @@ for (let x = 0; x < cols; x++) {
       head: -Math.random() * rows * 1.5,
 
       // velocidade de descida
-      speed: 0.01 + Math.random() * 0.08,
+      speed: 0.3 + Math.random() * 0.7,
 
       // tamanho do feixe variável
       length:
@@ -104,7 +104,7 @@ for (let x = 0; x < cols; x++) {
 // ===============================
 // FUNÇÃO PRINCIPAL DE DESENHO
 // ===============================
-function draw() {
+function draw(deltaTime = 1) {
   // limpa a tela com fundo preto
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -140,7 +140,7 @@ function draw() {
     for (let beam of beams[x]) {
       for (let j = 0; j < beam.length; j++) {
         // limita o tamanho visual do rastro
-        if (j > 25) break;
+        if (j > 40) break;
 
         const y = Math.floor(beam.head - j);
 
@@ -253,12 +253,12 @@ function draw() {
       }
 
       // movimento do feixe (descida)
-      beam.head += beam.speed;
+      beam.head += beam.speed * deltaTime;
 
       // quando sai da tela, reinicia com novos parâmetros
       if (beam.head - beam.length > rows) {
         beam.head = -Math.random() * rows;
-        beam.speed = 0.01 + Math.random() * 0.08;
+        beam.speed = 0.3 + Math.random() * 0.7;
 
         beam.length =
           Math.random() < 0.15
@@ -268,15 +268,15 @@ function draw() {
     }
 
     // adiciona/remove feixes dinamicamente (variação natural)
-    if (Math.random() < 0.001 && beams[x].length < 2) {
+    if (Math.random() < 0.03 && beams[x].length < 7) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
-        speed: 0.01 + Math.random() * 0.05,
+        speed: 0.3 + Math.random() * 0.7,
         length: 15 + Math.random() * 25,
       });
     }
 
-    if (Math.random() < 0.0005 && beams[x].length > 1) {
+    if (Math.random() < 0.0001 && beams[x].length > 1) {
       beams[x].pop();
     }
   }
@@ -288,8 +288,23 @@ function draw() {
 // ===============================
 // LOOP DE ANIMAÇÃO
 // ===============================
-function animate() {
-  draw();
+//function animate() {
+//  draw();
+//  requestAnimationFrame(animate);
+//}
+
+//animate();
+
+let lastTime = 0;
+
+function animate(currentTime) {
+  if (!lastTime) lastTime = currentTime;
+
+  const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
+  lastTime = currentTime;
+
+  draw(deltaTime);
+
   requestAnimationFrame(animate);
 }
 
