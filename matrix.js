@@ -268,7 +268,7 @@ function draw(deltaTime = 1) {
     }
 
     // adiciona/remove feixes dinamicamente (variação natural)
-    if (Math.random() < 0.04 && beams[x].length < 7) {
+    if (Math.random() < 0.01 && beams[x].length < 4) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
         speed: 0.3 + Math.random() * 0.6, //CONTROLE DE VELOCIDADE
