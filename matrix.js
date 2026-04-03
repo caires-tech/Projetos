@@ -90,7 +90,7 @@ for (let x = 0; x < cols; x++) {
       head: -Math.random() * rows * 1.5,
 
       // velocidade de descida
-      speed: 0.5 + Math.random() * 1.0,
+      speed: 1.0 + Math.random() * 2.0,
 
       // tamanho do feixe variável
       length:
@@ -258,7 +258,7 @@ function draw(deltaTime = 1) {
       // quando sai da tela, reinicia com novos parâmetros
       if (beam.head - beam.length > rows) {
         beam.head = -Math.random() * rows;
-        beam.speed = 0.5 + Math.random() * 1.0;
+        beam.speed = 1.0 + Math.random() * 2.0;
 
         beam.length =
           Math.random() < 0.15
@@ -271,7 +271,7 @@ function draw(deltaTime = 1) {
     if (Math.random() < 0.03 && beams[x].length < 7) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
-        speed: 0.5 + Math.random() * 1.0,
+        speed: 1.0 + Math.random() * 2.0,
         length: 15 + Math.random() * 25,
       });
     }
