@@ -276,7 +276,7 @@ function draw(deltaTime = 1) {
       });
     }
 
-    if (Math.random() < 0.001 && beams[x].length > 1) {
+    if (Math.random() < 0.0001 && beams[x].length > 1) {
       beams[x].pop();
     }
   }
