@@ -1,29 +1,67 @@
 /* ======== ESTILOS GERAIS ======== */
 body {
-    font-family: Arial, sans-serif;     /* Fonte padrão da página */
-    background: #000000;                   /* Fundo preto → tema dark */
-    color: #fff;                        /* Cor do texto */
-    text-align: center;                 /* Centraliza todo o conteúdo */
-    padding: 40px;                      /* Espaço interno ao redor da página */
+    font-family: Arial, sans-serif;
+    /* Fonte padrão da página */
+    background: #000000;
+    /* Fundo preto → tema dark */
+    color: #fff;
+    /* Cor do texto */
+    text-align: center;
+    /* Centraliza todo o conteúdo */
+    padding: 40px;
+    /* Espaço interno ao redor da página */
+}
+
+@font-face {
+    font-family: 'MatrixCode';
+    src: url('MatrixCodeNFI.ttf') format('truetype');
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 /* ======== TÍTULO COM ANIMAÇÃO ======== */
 h1 {
-    margin-bottom: 40px;                /* Espaço abaixo do título */
-    animation: pulse 2s infinite ease-in-out; /* Aplica a animação suave de pulso */
+    margin-bottom: 40px;
+    /* Espaço abaixo do título */
+    animation: pulse 2s infinite ease-in-out;
+    /* Aplica a animação suave de pulso */
 }
 
 /* ======== DEFINIÇÃO DA ANIMAÇÃO DE PULSO ======== */
 @keyframes pulse {
-    0%   { transform: scale(1);    opacity: 0.9; }  /* Começa no tamanho normal */
-    50%  { transform: scale(1.03); opacity: 1;   }  /* Cresce 3% → efeito de pulso */
-    100% { transform: scale(1);    opacity: 0.9; }  /* Volta ao tamanho original */
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    /* Começa no tamanho normal */
+    50% {
+        transform: scale(1.03);
+        opacity: 1;
+    }
+
+    /* Cresce 3% → efeito de pulso */
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    /* Volta ao tamanho original */
 }
+
 /* Estiliza o logo da página */
 .logo {
-    width: 180px;        /* Define o tamanho do logo */
-    display: block;      /* Permite centralizar com margin */
-    margin: 20px auto;   /* Centraliza o logo horizontalmente */
+    width: 180px;
+    /* Define o tamanho do logo */
+    display: block;
+    /* Permite centralizar com margin */
+    margin: 20px auto;
+    /* Centraliza o logo horizontalmente */
 }
 
 .logo-electric {
@@ -32,32 +70,54 @@ h1 {
 }
 
 @keyframes electricFlicker {
-    0%, 19%, 21%, 23%, 60%, 62%, 64%, 100% {
-        filter: drop-shadow(0 0 3px #00eaff)
-                drop-shadow(0 0 6px #00eaff);
+
+    0%,
+    19%,
+    21%,
+    23%,
+    60%,
+    62%,
+    64%,
+    100% {
+        filter: drop-shadow(0 0 3px #00eaff) drop-shadow(0 0 6px #00eaff);
     }
-    20%, 22%, 61%, 63% {
-        filter: drop-shadow(0 0 0px #00eaff)
-                drop-shadow(0 0 1px #00eaff);
+
+    20%,
+    22%,
+    61%,
+    63% {
+        filter: drop-shadow(0 0 0px #00eaff) drop-shadow(0 0 1px #00eaff);
     }
 }
 
 
 /* ======== BOTÕES DO MENU PRINCIPAL ======== */
 .btn {
-    display: block;                     /* Botões ocupam linhas separadas */
-    margin: 15px auto;                  /* Centraliza e dá espaçamento */
-    padding: 15px 25px;                 /* Tamanho interno do botão */
-    width: 280px;                       /* Largura fixa */
-    background: #222;                   /* Cor do botão */
-    color: #fff;                        /* Texto branco */
-    text-decoration: none;              /* Remove sublinhado */
-    border-radius: 8px;                 /* Bordas arredondadas */
-    font-size: 18px;                    /* Tamanho do texto */
-    transition: 0.2s;                   /* Animação suave no hover */
+    display: block;
+    /* Botões ocupam linhas separadas */
+    margin: 15px auto;
+    /* Centraliza e dá espaçamento */
+    padding: 15px 25px;
+    /* Tamanho interno do botão */
+    width: 280px;
+    /* Largura fixa */
+    background: #222;
+    /* Cor do botão */
+    color: #fff;
+    /* Texto branco */
+    text-decoration: none;
+    /* Remove sublinhado */
+    border-radius: 8px;
+    /* Bordas arredondadas */
+    font-size: 18px;
+    /* Tamanho do texto */
+    transition: 0.2s;
+    /* Animação suave no hover */
 }
 
 .btn:hover {
-    background: #444;                   /* Clareia levemente ao passar o mouse */
-    transform: scale(1.03);             /* Cresce um pouco → sensação de botão moderno */
+    background: #444;
+    /* Clareia levemente ao passar o mouse */
+    transform: scale(1.03);
+    /* Cresce um pouco → sensação de botão moderno */
 }

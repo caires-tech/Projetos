@@ -1,25 +1,29 @@
-<!DOCTYPE html>                                                                             <!-- Informa ao navegador que este documento usa HTML5 -->
-<html lang="pt-BR">                                                                         <!-- Define que o idioma principal da página é português do Brasil -->
+<!DOCTYPE html> <!-- Informa ao navegador que este documento usa HTML5 -->
+<html lang="pt-BR"> <!-- Define que o idioma principal da página é português do Brasil -->
 
 <head>
-    <meta charset="UTF-8">                                                                  <!-- Permite usar acentos e caracteres especiais -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">                  <!-- Torna a página responsiva -->
-    <title>Caires Tech</title>                                                              <!-- Título exibido na aba do navegador -->
-    <link rel="stylesheet" href="style.css">                                                <!-- Importa o arquivo CSS externo -->
+    <meta charset="UTF-8"> <!-- Permite usar acentos e caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página responsiva -->
+    <title>Caires Tech</title> <!-- Título exibido na aba do navegador -->
+    <link rel="stylesheet" href="style.css"> <!-- Importa o arquivo CSS externo -->
 </head>
 <header>
 
     <!-- Imagem do logo -->
     <img src="img/logo.png" class="logo-electric">
 
-
 </header>
-<body>                                                                                      <!-- Início da parte visível da página -->
-    <h1>PROJETOS</h1>                                                                       <!-- Título principal da página com animação aplicada via CSS -->
-    <a class="btn" href="CalculadoraSimples/index.html">Calculadora Simples</a>            <!-- Cada botão abaixo abre um dos projetos hospedados -->
+
+<body> <!-- Início da parte visível da página -->
+    <canvas id="matrix"></canvas>
+    <h1>PROJETOS</h1> <!-- Título principal da página com animação aplicada via CSS -->
+    <a class="btn" href="CalculadoraSimples/index.html">Calculadora Simples</a>
+    <!-- Cada botão abaixo abre um dos projetos hospedados -->
     <a class="btn" href="CalculadoraGorjeta/index.html">Calculadora de Gorjeta</a>
     <a class="btn" href="Adivinheonumero/index.html">Jogo Adivinhe o Número</a>
 
-</body>
-</html>
+    <script src="matrix.js" defer></script>
 
+</body>
+
+</html>
