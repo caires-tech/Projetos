@@ -114,7 +114,7 @@ function draw(deltaTime = 1) {
   // ===========================
 
   // atualiza apenas parte da grid por frame
-  for (let i = 0; i < cols * 15; i++) {
+  for (let i = 0; i < cols * 10; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
 
@@ -286,23 +286,36 @@ function draw(deltaTime = 1) {
 }
 
 // ===============================
-// LOOP DE ANIMAÇÃO
+// LOOP DE ANIMAÇÃO (SINCRONIZADO)
 // ===============================
 
-let lastTime = 0;
+const targetFPS = 30; // Define a velocidade real (30 é o padrão Matrix)
+const frameDuration = 1000 / targetFPS;
+let lastTimestamp = 0;
+let accumulator = 0;
 
 function animate(currentTime) {
-  if (!lastTime) lastTime = currentTime;
+  if (!lastTimestamp) lastTimestamp = currentTime;
 
-  const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
-  lastTime = currentTime;
+  // Calcula quanto tempo passou desde o último frame
+  const elapsed = currentTime - lastTimestamp;
+  lastTimestamp = currentTime;
 
-  draw(deltaTime);
+  // Acumula o tempo passado
+  accumulator += elapsed;
 
+  // Enquanto houver "tempo acumulado" suficiente para um frame de 30 FPS...
+  while (accumulator >= frameDuration) {
+    draw(1); // Executa o desenho com passo constante
+    accumulator -= frameDuration;
+  }
+
+  // Pede o próximo quadro ao navegador
   requestAnimationFrame(animate);
 }
 
-animate();
+// Inicia a animação
+requestAnimationFrame(animate);
 
 // ===============================
 // RESPONSIVIDADE
