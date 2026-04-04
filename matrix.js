@@ -63,11 +63,11 @@ for (let y = 0; y < rows; y++) {
     // sem trava inicialmente
     lockGrid[y][x] = 0;
 
-    // 10% dos caracteres terão efeito invertido
-    flipGrid[y][x] = Math.random() < 0.1;
+    // 5% dos caracteres terão efeito invertido
+    flipGrid[y][x] = Math.random() < 0.05;
 
     // cada célula tem sua própria velocidade de troca
-    changeSpeedGrid[y][x] = 0.09 + Math.random() * 0.15;
+    changeSpeedGrid[y][x] = 0.05 + Math.random() * 0.1;
   }
 }
 
@@ -82,7 +82,7 @@ for (let x = 0; x < cols; x++) {
   beams[x] = [];
 
   // 1 ou 2 feixes por coluna
-  const beamCount = Math.floor(Math.random() * 3) + 2;
+  const beamCount = Math.floor(Math.random() * 2) + 2;
 
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
@@ -90,13 +90,13 @@ for (let x = 0; x < cols; x++) {
       head: -Math.random() * rows * 1.5,
 
       // velocidade de descida
-      speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
+      speed: 0.2 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
 
       // tamanho do feixe variável
       length:
         Math.random() < 0.15
           ? rows * (0.7 + Math.random() * 0.6)
-          : 15 + Math.random() * 25,
+          : 15 + Math.random() * 20,
     });
   }
 }
@@ -114,7 +114,7 @@ function draw(deltaTime = 1) {
   // ===========================
 
   // atualiza apenas parte da grid por frame
-  for (let i = 0; i < cols * 10; i++) {
+  for (let i = 0; i < cols * 8; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
 
@@ -123,7 +123,7 @@ function draw(deltaTime = 1) {
     // caracteres "congelados" trocam menos (efeito de brilho persistente)
     if (lockGrid[y][x] > 0) {
       lockGrid[y][x]--;
-      changeChance *= 0.8;
+      changeChance *= 0.6;
     }
 
     // troca aleatória de caractere
@@ -140,7 +140,7 @@ function draw(deltaTime = 1) {
     for (let beam of beams[x]) {
       for (let j = 0; j < beam.length; j++) {
         // limita o tamanho visual do rastro
-        if (j > 40) break;
+        if (j > 35) break;
 
         const y = Math.floor(beam.head - j);
 
@@ -158,7 +158,7 @@ function draw(deltaTime = 1) {
           ctx.shadowBlur = 0;
 
           // chance de inverter caractere dinamicamente
-          const flip = Math.random() < 0.15;
+          const flip = Math.random() < 0.1;
 
           if (flip) {
             ctx.save();
@@ -195,7 +195,7 @@ function draw(deltaTime = 1) {
 
           // trava os caracteres próximos da cabeça (mais brilho)
           if (j < 2) {
-            lockGrid[y][x] = 10 + Math.random() * 15;
+            lockGrid[y][x] = 8 + Math.random() * 13;
           }
 
           // =======================
@@ -289,7 +289,7 @@ function draw(deltaTime = 1) {
 // LOOP DE ANIMAÇÃO (SINCRONIZADO)
 // ===============================
 
-const targetFPS = 30; // Define a velocidade real (30 é o padrão Matrix)
+const targetFPS = 30; // Define a velocidade real
 const frameDuration = 1000 / targetFPS;
 let lastTimestamp = 0;
 let accumulator = 0;
