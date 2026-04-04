@@ -41,13 +41,10 @@ const lettersArray = letters.split("");
 
 // caractere exibido em cada posição
 const grid = [];
-
 // controla "travamento" de caracteres iluminados (efeito glow estável)
 const lockGrid = [];
-
 // velocidade individual de troca de cada célula
 const changeSpeedGrid = [];
-
 // define quais células terão efeito de inversão (flip)
 const flipGrid = [];
 
@@ -66,27 +63,26 @@ for (let y = 0; y < rows; y++) {
     // 10% dos caracteres terão efeito invertido
     flipGrid[y][x] = Math.random() < 0.1;
     // cada célula tem sua própria velocidade de troca
-    changeSpeedGrid[y][x] = 0.09 + Math.random() * 0.15;
+    changeSpeedGrid[y][x] = 0.08 + Math.random() * 0.14;
   }
 }
 
 // ===============================
 // FEIXES
 // ===============================
-// cada coluna pode ter até 2 feixes independentes
 
 const beams = [];
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
   // 1 ou 2 feixes por coluna
 
-  const beamCount = Math.floor(Math.random() * 3) + 2;
+  const beamCount = Math.floor(Math.random() * 2) + 1;
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
       // posição inicial (começa fora da tela)
       head: -Math.random() * rows * 1.5,
       // velocidade de descida
-      speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
+      speed: 0.2 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
       // tamanho do feixe variável
       length:
         Math.random() < 0.15
@@ -110,7 +106,7 @@ function draw(deltaTime = 1) {
   // ===========================
   // atualiza apenas parte da grid por frame
 
-  for (let i = 0; i < cols * 15; i++) {
+  for (let i = 0; i < cols * 8; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
     let changeChance = changeSpeedGrid[y][x];
@@ -250,11 +246,11 @@ function draw(deltaTime = 1) {
     }
 
     // adiciona/remove feixes dinamicamente (variação natural)
-    if (Math.random() < 0.25 && beams[x].length < 8) {
+    if (Math.random() < 0.2 && beams[x].length < 6) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
         speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
-        length: 15 + Math.random() * 25,
+        length: 14 + Math.random() * 23,
       });
     }
 
@@ -268,19 +264,34 @@ function draw(deltaTime = 1) {
 }
 
 // ===============================
-// LOOP DE ANIMAÇÃO
+// LOOP DE ANIMAÇÃO (SINCRONIZADO)
 // ===============================
 
-let lastTime = 0;
+const targetFPS = 30; // Define a velocidade real
+const frameDuration = 1000 / targetFPS;
+let lastTimestamp = 0;
+let accumulator = 0;
 
 function animate(currentTime) {
-  if (!lastTime) lastTime = currentTime;
-  const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
-  lastTime = currentTime;
-  draw(deltaTime);
+  if (!lastTimestamp) lastTimestamp = currentTime;
+
+  // Calcula quanto tempo passou desde o último frame
+  const elapsed = currentTime - lastTimestamp;
+  lastTimestamp = currentTime;
+
+  // Acumula o tempo passado
+  accumulator += elapsed;
+
+  // Enquanto houver "tempo acumulado" suficiente para um frame de 30 FPS...
+  while (accumulator >= frameDuration) {
+    draw(1); // Executa o desenho com passo constante
+    accumulator -= frameDuration;
+  }
+  // Pede o próximo quadro ao navegador
   requestAnimationFrame(animate);
 }
-animate();
+// Inicia a animação
+requestAnimationFrame(animate);
 
 // ===============================
 // RESPONSIVIDADE
