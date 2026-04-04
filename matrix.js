@@ -142,36 +142,34 @@ function draw(deltaTime = 1) {
           // =======================
           // RASTRO VERDE
           // =======================
+
           ctx.fillStyle = `rgba(0, 255, 70, ${alpha * 0.1})`;
           ctx.shadowBlur = 0;
-          // chance de inverter caractere dinamicamente
+
           const flip = Math.random() < 0.15;
-          if (flip) {
+
+          if (flip || flipGrid[y][x]) {
             ctx.save();
-            ctx.translate(x * hSpacing, y * fontSize);
-            // espelha horizontal ou vertical
-            if (Math.random() < 0.5) {
-              ctx.scale(-1, 1);
+            // Movemos para o CENTRO da célula antes de girar
+            ctx.translate(
+              x * hSpacing + hSpacing / 2,
+              y * fontSize + fontSize / 2,
+            );
+
+            // Lógica de espelhamento
+            if (flip) {
+              if (Math.random() < 0.5) ctx.scale(-1, 1);
+              else ctx.scale(1, -1);
             } else {
-              ctx.scale(1, -1);
+              if ((x + y) % 2 === 0) ctx.scale(-1, 1);
+              else ctx.scale(1, -1);
             }
-            ctx.fillText(char, 0, 0);
+
+            // Desenha a letra centralizada (recuando metade do tamanho)
+            ctx.fillText(char, -hSpacing / 2, -fontSize / 2);
             ctx.restore();
           } else {
-            // inversão leve fixa para alguns caracteres (efeito de glitch estático)
-            if (flipGrid[y][x]) {
-              ctx.save();
-              ctx.translate(x * hSpacing, y * fontSize);
-              if ((x + y) % 2 === 0) {
-                ctx.scale(-1, 1);
-              } else {
-                ctx.scale(1, -1);
-              }
-              ctx.fillText(char, 0, 0);
-              ctx.restore();
-            } else {
-              ctx.fillText(char, x * hSpacing, y * fontSize);
-            }
+            ctx.fillText(char, x * hSpacing, y * fontSize);
           }
 
           // trava os caracteres próximos da cabeça (mais brilho)
