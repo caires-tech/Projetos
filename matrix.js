@@ -74,9 +74,8 @@ for (let y = 0; y < rows; y++) {
 const beams = [];
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
-  // 1 ou 2 feixes por coluna
 
-  const beamCount = Math.floor(Math.random() * 2) + 1;
+  const beamCount = Math.floor(Math.random() * 1) + 1;
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
       // posição inicial (começa fora da tela)
@@ -85,9 +84,9 @@ for (let x = 0; x < cols; x++) {
       speed: 0.2 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
       // tamanho do feixe variável
       length:
-        Math.random() < 0.15
-          ? rows * (0.7 + Math.random() * 0.6)
-          : 15 + Math.random() * 25,
+        Math.random() < 0.13
+          ? rows * (0.5 + Math.random() * 0.4)
+          : 10 + Math.random() * 20,
     });
   }
 }
@@ -106,7 +105,7 @@ function draw(deltaTime = 1) {
   // ===========================
   // atualiza apenas parte da grid por frame
 
-  for (let i = 0; i < cols * 8; i++) {
+  for (let i = 0; i < cols * 6; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
     let changeChance = changeSpeedGrid[y][x];
