@@ -101,7 +101,7 @@ function draw(deltaTime = 1) {
   // ATUALIZAÇÃO DOS CARACTERES
   // ===========================
   // atualiza apenas parte da grid por frame
-  for (let i = 0; i < cols * 8; i++) {
+  for (let i = 0; i < cols * 6; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
     let changeChance = changeSpeedGrid[y][x];
@@ -109,7 +109,7 @@ function draw(deltaTime = 1) {
     // caracteres "congelados" trocam menos (efeito de brilho persistente)
     if (lockGrid[y][x] > 0) {
       lockGrid[y][x]--;
-      changeChance *= 0.8;
+      changeChance *= 0.6;
     }
     // troca aleatória de caractere
     if (Math.random() < changeChance) {
@@ -125,7 +125,7 @@ function draw(deltaTime = 1) {
     for (let beam of beams[x]) {
       for (let j = 0; j < beam.length; j++) {
         // limita o tamanho visual do rastro
-        if (j > 40) break;
+        if (j > 37) break;
         const y = Math.floor(beam.head - j);
         if (y >= 0 && y < rows) {
           const char = grid[y][x];
@@ -228,13 +228,13 @@ function draw(deltaTime = 1) {
 
         beam.length =
           Math.random() < 0.15
-            ? rows * (0.7 + Math.random() * 0.6)
+            ? rows * (0.5 + Math.random() * 0.4)
             : 15 + Math.random() * 25;
       }
     }
 
     // adiciona/remove feixes dinamicamente (variação natural)
-    if (Math.random() < 0.25 && beams[x].length < 8) {
+    if (Math.random() < 0.2 && beams[x].length < 6) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
         speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
