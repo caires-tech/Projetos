@@ -60,7 +60,7 @@ for (let y = 0; y < rows; y++) {
     // 10% dos caracteres terão efeito invertido
     flipGrid[y][x] = Math.random() < 0.1;
     // cada célula tem sua própria velocidade de troca
-    changeSpeedGrid[y][x] = 0.09 + Math.random() * 0.15;
+    changeSpeedGrid[y][x] = 0.07 + Math.random() * 0.1;
   }
 }
 
@@ -72,7 +72,7 @@ const beams = [];
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
 
-  // 1 ou 2 feixes por coluna
+  // feixes por coluna
   const beamCount = Math.floor(Math.random() * 1) + 1;
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
@@ -94,6 +94,7 @@ for (let x = 0; x < cols; x++) {
 // ===============================
 function draw(deltaTime = 1) {
   // limpa a tela com fundo preto
+  ctx.shadowBlur = 0;
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -234,7 +235,7 @@ function draw(deltaTime = 1) {
     }
 
     // adiciona/remove feixes dinamicamente (variação natural)
-    if (Math.random() < 0.2 && beams[x].length < 6) {
+    if (Math.random() < 0.25 && beams[x].length < 3) {
       beams[x].push({
         head: -Math.random() * rows * 1.5,
         speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
