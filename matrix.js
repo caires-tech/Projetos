@@ -75,14 +75,13 @@ for (let y = 0; y < rows; y++) {
 // FEIXES
 // ===============================
 
-// cada coluna pode ter até 2 feixes independentes
 const beams = [];
 
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
 
   // 1 ou 2 feixes por coluna
-  const beamCount = Math.floor(Math.random() * 3) + 2;
+  const beamCount = Math.floor(Math.random() * 1) + 1;
 
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
@@ -114,7 +113,7 @@ function draw(deltaTime = 1) {
   // ===========================
 
   // atualiza apenas parte da grid por frame
-  for (let i = 0; i < cols * 15; i++) {
+  for (let i = 0; i < cols * 8; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
 
@@ -157,40 +156,32 @@ function draw(deltaTime = 1) {
           ctx.fillStyle = `rgba(0, 255, 70, ${alpha * 0.1})`;
           ctx.shadowBlur = 0;
 
-          // chance de inverter caractere dinamicamente
           const flip = Math.random() < 0.15;
 
-          if (flip) {
+          // Se houver flip (dinâmico ou fixo da grid)
+          if (flip || flipGrid[y][x]) {
             ctx.save();
+            // Move para o centro exato da célula
+            ctx.translate(
+              x * hSpacing + hSpacing / 2,
+              y * fontSize + fontSize / 2,
+            );
 
-            ctx.translate(x * hSpacing, y * fontSize);
-
-            // espelha horizontal ou vertical
-            if (Math.random() < 0.5) {
-              ctx.scale(-1, 1);
+            // Aplica o espelhamento
+            if (flip) {
+              if (Math.random() < 0.5) ctx.scale(-1, 1);
+              else ctx.scale(1, -1);
             } else {
-              ctx.scale(1, -1);
+              if ((x + y) % 2 === 0) ctx.scale(-1, 1);
+              else ctx.scale(1, -1);
             }
 
-            ctx.fillText(char, 0, 0);
+            // Desenha a letra compensando o movimento do translate
+            ctx.fillText(char, -hSpacing / 2, -fontSize / 2);
             ctx.restore();
           } else {
-            // inversão leve fixa para alguns caracteres (efeito de glitch estático)
-            if (flipGrid[y][x]) {
-              ctx.save();
-              ctx.translate(x * hSpacing, y * fontSize);
-
-              if ((x + y) % 2 === 0) {
-                ctx.scale(-1, 1);
-              } else {
-                ctx.scale(1, -1);
-              }
-
-              ctx.fillText(char, 0, 0);
-              ctx.restore();
-            } else {
-              ctx.fillText(char, x * hSpacing, y * fontSize);
-            }
+            // Desenho normal para quem não tem flip
+            ctx.fillText(char, x * hSpacing, y * fontSize);
           }
 
           // trava os caracteres próximos da cabeça (mais brilho)
@@ -289,20 +280,24 @@ function draw(deltaTime = 1) {
 // LOOP DE ANIMAÇÃO
 // ===============================
 
-let lastTime = 0;
+const targetFPS = 30;
+const frameDuration = 1000 / targetFPS;
+let lastTimestamp = 0;
+let accumulator = 0;
 
 function animate(currentTime) {
-  if (!lastTime) lastTime = currentTime;
+  if (!lastTimestamp) lastTimestamp = currentTime;
+  const elapsed = currentTime - lastTimestamp;
+  lastTimestamp = currentTime;
+  accumulator += elapsed;
 
-  const deltaTime = Math.min((currentTime - lastTime) / 16.67, 2);
-  lastTime = currentTime;
-
-  draw(deltaTime);
-
+  while (accumulator >= frameDuration) {
+    draw(1);
+    accumulator -= frameDuration;
+  }
   requestAnimationFrame(animate);
 }
-
-animate();
+requestAnimationFrame(animate);
 
 // ===============================
 // RESPONSIVIDADE
