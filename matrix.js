@@ -1,5 +1,5 @@
 // ===============================
-// SETUP DO CANVAS
+// --- SETUP DO CANVAS ---
 // ===============================
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
@@ -21,7 +21,7 @@ const letters =
 const lettersArray = letters.split("");
 
 // ===============================
-// ESTRUTURAS PRINCIPAIS
+// --- ESTRUTURAS PRINCIPAIS ---
 // ===============================
 const grid = [];
 const lockGrid = [];
@@ -40,8 +40,9 @@ for (let y = 0; y < rows; y++) {
     changeSpeedGrid[y][x] = 0.07 + Math.random() * 0.1;
   }
 }
-
-// FEIXES INICIAIS (REDUZIDO: apenas 30% das colunas começam com feixe)
+// ===============================
+// --- FEIXES INICIAIS ---
+// ===============================
 const beams = [];
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
@@ -59,7 +60,7 @@ for (let x = 0; x < cols; x++) {
 }
 
 // ===============================
-// FUNÇÃO DE DESENHO
+// --- FUNÇÃO DE DESENHO ---
 // ===============================
 function draw(deltaTime = 1) {
   ctx.shadowBlur = 0;
@@ -90,7 +91,9 @@ function draw(deltaTime = 1) {
           const char = grid[y][x];
           const alpha = Math.pow(1 - j / beam.length, 2.5);
 
+          // ===============================
           // --- RASTRO VERDE ---
+          // ===============================
           ctx.fillStyle = `rgba(0, 255, 70, ${alpha * 0.1})`;
           ctx.shadowBlur = 0;
 
@@ -116,7 +119,10 @@ function draw(deltaTime = 1) {
 
           if (j < 2) lockGrid[y][x] = 10 + Math.random() * 15;
 
-          // --- SEU VISUAL ORIGINAL (3 CAMADAS DE CABEÇA) ---
+          // ===============================
+          // --- 3 CAMADAS NO FEIXE ---
+          // ===============================
+
           if (j === 0) {
             const speedFactor = beam.speed;
             const intensity = 0.8 + Math.random() * 0.4;
@@ -158,9 +164,10 @@ function draw(deltaTime = 1) {
         beam.speed = 0.25 + Math.random() * 0.5;
       }
     }
-
+    // ===============================
     // --- CONTROLE DE DENSIDADE ---
-    // Chance muito baixa de criar novo feixe para manter o fundo preto
+    // ===============================
+
     if (Math.random() < 0.02 && beams[x].length < 1) {
       beams[x].push({
         head: -10,
@@ -172,7 +179,7 @@ function draw(deltaTime = 1) {
 }
 
 // ===============================
-// LOOP DE ANIMAÇÃO
+// --- LOOP DE ANIMAÇÃO ---
 // ===============================
 const targetFPS = 30;
 const frameDuration = 1000 / targetFPS;
