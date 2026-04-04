@@ -53,8 +53,8 @@ for (let x = 0; x < cols; x++) {
       speed: 0.25 + Math.random() * 0.5,
       length:
         Math.random() < 0.15
-          ? rows * (0.7 + Math.random() * 0.6)
-          : 15 + Math.random() * 25,
+          ? rows * (1.2 + Math.random() * 0.5)
+          : 20 + Math.random() * 25,
     });
   }
 }
@@ -172,7 +172,7 @@ function draw(deltaTime = 1) {
       beams[x].push({
         head: -10,
         speed: 0.25 + Math.random() * 0.5,
-        length: 15 + Math.random() * 25,
+        length: 25 + Math.random() * 35,
       });
     }
   }
