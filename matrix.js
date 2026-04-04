@@ -68,7 +68,7 @@ function draw(deltaTime = 1) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Atualização da grid
-  for (let i = 0; i < cols * 6; i++) {
+  for (let i = 0; i < cols * 7; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
     let changeChance = changeSpeedGrid[y][x];
@@ -85,7 +85,7 @@ function draw(deltaTime = 1) {
   for (let x = 0; x < cols; x++) {
     for (let beam of beams[x]) {
       for (let j = 0; j < beam.length; j++) {
-        if (j > 37) break;
+        if (j > 40) break;
         const y = Math.floor(beam.head - j);
         if (y >= 0 && y < rows) {
           const char = grid[y][x];
@@ -168,7 +168,7 @@ function draw(deltaTime = 1) {
     // --- CONTROLE DE DENSIDADE ---
     // ===============================
 
-    if (Math.random() < 0.02 && beams[x].length < 1) {
+    if (Math.random() < 0.04 && beams[x].length < 1) {
       beams[x].push({
         head: -10,
         speed: 0.25 + Math.random() * 0.5,
