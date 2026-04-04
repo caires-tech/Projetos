@@ -30,7 +30,6 @@ ctx.textBaseline = "top";
 // ===============================
 const letters =
   "アイウエオカキクケコサシスセソタチツテトナニヌネハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789WZMHKYあいうえおかきくけこさしすせそたちつてとなにぬねはひふへほアイウエカキクケコサシスセソタチツテトナニヌネハヒフヘホあいうえおかきくけこさしすせそ";
-
 const lettersArray = letters.split("");
 
 // ===============================
@@ -39,13 +38,10 @@ const lettersArray = letters.split("");
 
 // caractere exibido em cada posição
 const grid = [];
-
 // controla "travamento" de caracteres iluminados (efeito glow estável)
 const lockGrid = [];
-
 // velocidade individual de troca de cada célula
 const changeSpeedGrid = [];
-
 // define quais células terão efeito de inversão (flip)
 const flipGrid = [];
 
@@ -59,13 +55,10 @@ for (let y = 0; y < rows; y++) {
   for (let x = 0; x < cols; x++) {
     // caractere aleatório inicial
     grid[y][x] = lettersArray[Math.floor(Math.random() * lettersArray.length)];
-
     // sem trava inicialmente
     lockGrid[y][x] = 0;
-
     // 10% dos caracteres terão efeito invertido
     flipGrid[y][x] = Math.random() < 0.1;
-
     // cada célula tem sua própria velocidade de troca
     changeSpeedGrid[y][x] = 0.09 + Math.random() * 0.15;
   }
@@ -76,21 +69,17 @@ for (let y = 0; y < rows; y++) {
 // ===============================
 
 const beams = [];
-
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
 
   // 1 ou 2 feixes por coluna
   const beamCount = Math.floor(Math.random() * 1) + 1;
-
   for (let b = 0; b < beamCount; b++) {
     beams[x].push({
       // posição inicial (começa fora da tela)
       head: -Math.random() * rows * 1.5,
-
       // velocidade de descida
       speed: 0.25 + Math.random() * 0.5, //CONTROLE DE VELOCIDADE
-
       // tamanho do feixe variável
       length:
         Math.random() < 0.15
@@ -111,12 +100,10 @@ function draw(deltaTime = 1) {
   // ===========================
   // ATUALIZAÇÃO DOS CARACTERES
   // ===========================
-
   // atualiza apenas parte da grid por frame
   for (let i = 0; i < cols * 8; i++) {
     const x = Math.floor(Math.random() * cols);
     const y = Math.floor(Math.random() * rows);
-
     let changeChance = changeSpeedGrid[y][x];
 
     // caracteres "congelados" trocam menos (efeito de brilho persistente)
@@ -124,7 +111,6 @@ function draw(deltaTime = 1) {
       lockGrid[y][x]--;
       changeChance *= 0.8;
     }
-
     // troca aleatória de caractere
     if (Math.random() < changeChance) {
       grid[y][x] =
@@ -140,12 +126,9 @@ function draw(deltaTime = 1) {
       for (let j = 0; j < beam.length; j++) {
         // limita o tamanho visual do rastro
         if (j > 40) break;
-
         const y = Math.floor(beam.head - j);
-
         if (y >= 0 && y < rows) {
           const char = grid[y][x];
-
           // intensidade do fade do rastro
           const t = j / beam.length;
           const alpha = Math.pow(1 - t, 2.5);
@@ -155,9 +138,7 @@ function draw(deltaTime = 1) {
           // =======================
           ctx.fillStyle = `rgba(0, 255, 70, ${alpha * 0.1})`;
           ctx.shadowBlur = 0;
-
           const flip = Math.random() < 0.15;
-
           // Se houver flip (dinâmico ou fixo da grid)
           if (flip || flipGrid[y][x]) {
             ctx.save();
@@ -166,7 +147,6 @@ function draw(deltaTime = 1) {
               x * hSpacing + hSpacing / 2,
               y * fontSize + fontSize / 2,
             );
-
             // Aplica o espelhamento
             if (flip) {
               if (Math.random() < 0.5) ctx.scale(-1, 1);
@@ -175,7 +155,6 @@ function draw(deltaTime = 1) {
               if ((x + y) % 2 === 0) ctx.scale(-1, 1);
               else ctx.scale(1, -1);
             }
-
             // Desenha a letra compensando o movimento do translate
             ctx.fillText(char, -hSpacing / 2, -fontSize / 2);
             ctx.restore();
@@ -183,7 +162,6 @@ function draw(deltaTime = 1) {
             // Desenho normal para quem não tem flip
             ctx.fillText(char, x * hSpacing, y * fontSize);
           }
-
           // trava os caracteres próximos da cabeça (mais brilho)
           if (j < 2) {
             lockGrid[y][x] = 10 + Math.random() * 15;
@@ -223,7 +201,6 @@ function draw(deltaTime = 1) {
           else if (j === 1) {
             // transição branco / verde
             const green = 180 + Math.random() * 50;
-
             ctx.fillStyle = `rgba(${green * 0.6}, ${green}, ${
               green * 0.4
             }, ${alpha})`;
@@ -231,14 +208,12 @@ function draw(deltaTime = 1) {
             ctx.shadowBlur = 18;
           } else {
             const green = 120 + Math.random() * 80;
-
             ctx.fillStyle = `rgba(${green * 0.2}, ${green}, ${
               green * 0.1
             }, ${alpha})`;
 
             ctx.shadowBlur = 0;
           }
-
           ctx.fillText(char, x * hSpacing, y * fontSize);
         }
       }
@@ -266,12 +241,10 @@ function draw(deltaTime = 1) {
         length: 15 + Math.random() * 25,
       });
     }
-
     if (Math.random() < 0.0001 && beams[x].length > 1) {
       beams[x].pop();
     }
   }
-
   // reset de sombra
   ctx.shadowBlur = 0;
 }
@@ -290,7 +263,6 @@ function animate(currentTime) {
   const elapsed = currentTime - lastTimestamp;
   lastTimestamp = currentTime;
   accumulator += elapsed;
-
   while (accumulator >= frameDuration) {
     draw(1);
     accumulator -= frameDuration;
