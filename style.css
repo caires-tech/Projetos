@@ -4,9 +4,10 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Trava scroll */
-    position: fixed; /* Impede o deslocamento no iOS */
-    overscroll-behavior: none; /* Desativa o pull-to-refresh */
+    overflow: hidden !important;
+    position: fixed;
+    touch-action: none;
+    -webkit-overflow-scrolling: auto;
 }
 
 body {

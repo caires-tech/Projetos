@@ -218,16 +218,16 @@ requestAnimationFrame(animate);
 // ===============================
 // --- RESPONSIVIDADE ---
 // ===============================
-window.addEventListener("resize", () => {
-  // Atualiza o tamanho do canvas
+
+function resizeMatrix() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  // Recalcula as colunas e linhas com base no novo tamanho
+  // Recalcula colunas e linhas
   const newCols = Math.floor(canvas.width / hSpacing);
   const newRows = Math.floor(canvas.height / fontSize);
 
-  // Ajusta as grades (grid, lockGrid, etc.) para o novo tamanho
+  // Ajusta as grades para o novo tamanho instantaneamente
   for (let y = 0; y < newRows; y++) {
     if (!grid[y]) {
       grid[y] = [];
@@ -245,34 +245,34 @@ window.addEventListener("resize", () => {
       }
     }
   }
-
-  // Array de feixes com o tamanho correto das colunas
   if (beams.length < newCols) {
-    for (let x = beams.length; x < newCols; x++) {
-      beams[x] = [];
-    }
+    for (let x = beams.length; x < newCols; x++) beams[x] = [];
   }
-});
+}
 
-// Trava total contra o 'Puxar para atualizar'
-document.addEventListener("touchstart", function (e) {}, { passive: false });
+window.addEventListener("resize", resizeMatrix);
+window.addEventListener("orientationchange", resizeMatrix);
 
+// TRAVA DE TOQUE PARA SAFARI (iOS 13+)
+let lastY = 0;
 document.addEventListener(
-  "touchmove",
-  function (e) {
-    if (e.touches.length === 1) {
-      e.preventDefault();
-    }
+  "touchstart",
+  (e) => {
+    lastY = e.touches[0].clientY;
   },
   { passive: false },
 );
 
-window.addEventListener(
-  "scroll",
+document.addEventListener(
+  "touchmove",
   (e) => {
-    if (window.scrollY !== 0) {
-      window.scrollTo(0, 0);
+    const y = e.touches[0].clientY;
+    const scrollingUp = y > lastY;
+
+    if (window.pageYOffset <= 0 && scrollingUp) {
+      e.preventDefault();
     }
+    lastY = y;
   },
   { passive: false },
 );
