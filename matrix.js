@@ -253,3 +253,19 @@ window.addEventListener("resize", () => {
     }
   }
 });
+
+// Impede o gesto de 'puxar para baixo' no mobile (Safari/Chrome)
+document.addEventListener(
+  "touchmove",
+  function (e) {
+    if (e.scale !== 1) {
+      e.preventDefault();
+    }
+  },
+  { passive: false },
+);
+
+// Força a página a ficar sempre no topo
+window.onscroll = function () {
+  window.scrollTo(0, 0);
+};
