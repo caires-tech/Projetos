@@ -7,17 +7,31 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const fontSize = 18;
-const horizontalScale = 0.85;
+// DETECÇÃO DE SAFARI (Bifurcação de visual)
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+// Valores originais (Chrome/Windows/Android)
+let fontSize = 18;
+let horizontalScale = 0.85;
+
+// Ajuste fino para manter a fidelidade no Safari (Mac/iOS)
+if (isSafari) {
+  fontSize = 17;
+  horizontalScale = 0.94;
+}
+
 const hSpacing = fontSize * horizontalScale;
 const cols = Math.floor(canvas.width / hSpacing);
 const rows = Math.floor(canvas.height / fontSize);
 
-ctx.font = "bold " + fontSize + "px monospace";
+ctx.font = isSafari
+  ? "bold " + fontSize + "px 'Courier New', Courier, monospace"
+  : "bold " + fontSize + "px monospace";
+
 ctx.textBaseline = "top";
 
 const letters =
-  "アイウエオカキクケコサシスセソタチツテトナニヌネハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789WZMHKYあいうえおかきくけこさしすせそたちつてとなにぬねはひふへほアイウエカキクケコサシスセソタチツテトナニヌネハヒフヘホあいうえおかきくけこさしすせそ";
+  "アイウエオカキクケコサシスセソタチツテトナニヌネハヒフヘホABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789WZMHKYあいうえおかきくけこさしす세소たちつてとなにぬねはひふへほアイウエカキクケコサシスセソタチツテトナニヌネハヒフヘホあいうえおかきくけこさしすせそ";
 const lettersArray = letters.split("");
 
 // ===============================
