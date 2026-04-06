@@ -60,7 +60,7 @@ for (let y = 0; y < rows; y++) {
 const beams = [];
 for (let x = 0; x < cols; x++) {
   beams[x] = [];
-  if (Math.random() < 0.6) {
+  if (Math.random() < 0.7) {
     // DENSIDADE INICIAL
     beams[x].push({
       head: -Math.random() * rows * 1.5,
@@ -182,7 +182,7 @@ function draw(deltaTime = 1) {
     // --- CONTROLE DE DENSIDADE ---
     // ===============================
 
-    if (Math.random() < 0.04 && beams[x].length < 1) {
+    if (Math.random() < 0.05 && beams[x].length < 1) {
       beams[x].push({
         head: -10,
         speed: 0.25 + Math.random() * 0.5,
