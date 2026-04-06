@@ -121,3 +121,7 @@ h1 {
     transform: scale(1.03);
     /* Cresce um pouco → sensação de botão moderno */
 }
+
+body {
+    overscroll-behavior-y: contain; /* Impede o 'puxar para atualizar' em dispositivo móvel */
+}
