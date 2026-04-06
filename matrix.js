@@ -215,7 +215,41 @@ function animate(currentTime) {
 }
 requestAnimationFrame(animate);
 
+// ===============================
+// --- RESPONSIVIDADE ---
+// ===============================
 window.addEventListener("resize", () => {
+  // Atualiza o tamanho do canvas
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
+  // Recalcula as colunas e linhas com base no novo tamanho
+  const newCols = Math.floor(canvas.width / hSpacing);
+  const newRows = Math.floor(canvas.height / fontSize);
+
+  // Ajusta as grades (grid, lockGrid, etc.) para o novo tamanho
+  for (let y = 0; y < newRows; y++) {
+    if (!grid[y]) {
+      grid[y] = [];
+      lockGrid[y] = [];
+      changeSpeedGrid[y] = [];
+      flipGrid[y] = [];
+    }
+    for (let x = 0; x < newCols; x++) {
+      if (grid[y][x] === undefined) {
+        grid[y][x] =
+          lettersArray[Math.floor(Math.random() * lettersArray.length)];
+        lockGrid[y][x] = 0;
+        flipGrid[y][x] = Math.random() < 0.1;
+        changeSpeedGrid[y][x] = 0.07 + Math.random() * 0.1;
+      }
+    }
+  }
+
+  // Array de feixes com o tamanho correto das colunas
+  if (beams.length < newCols) {
+    for (let x = beams.length; x < newCols; x++) {
+      beams[x] = [];
+    }
+  }
 });
