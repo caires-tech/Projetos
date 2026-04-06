@@ -254,18 +254,25 @@ window.addEventListener("resize", () => {
   }
 });
 
-// Impede o gesto de 'puxar para baixo' no mobile (Safari/Chrome)
+// Trava total contra o 'Puxar para atualizar'
+document.addEventListener("touchstart", function (e) {}, { passive: false });
+
 document.addEventListener(
   "touchmove",
   function (e) {
-    if (e.scale !== 1) {
+    if (e.touches.length === 1) {
       e.preventDefault();
     }
   },
   { passive: false },
 );
 
-// Força a página a ficar sempre no topo
-window.onscroll = function () {
-  window.scrollTo(0, 0);
-};
+window.addEventListener(
+  "scroll",
+  (e) => {
+    if (window.scrollY !== 0) {
+      window.scrollTo(0, 0);
+    }
+  },
+  { passive: false },
+);

@@ -1,15 +1,24 @@
 /* ======== ESTILOS GERAIS ======== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Trava scroll */
+    position: fixed; /* Impede o deslocamento no iOS */
+    overscroll-behavior: none; /* Desativa o pull-to-refresh */
+}
+
 body {
     font-family: Arial, sans-serif;
-    /* Fonte padrão da página */
     background: #000000;
-    /* Fundo preto → tema dark */
     color: #fff;
-    /* Cor do texto */
     text-align: center;
-    /* Centraliza todo o conteúdo */
-    padding: 40px;
-    /* Espaço interno ao redor da página */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px; 
 }
 
 @font-face {
@@ -21,7 +30,10 @@ canvas {
     position: fixed;
     top: 0;
     left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
+    pointer-events: none; /* Essencial: toques passam pelo canvas para os botões */
 }
 
 /* ======== TÍTULO COM ANIMAÇÃO ======== */
